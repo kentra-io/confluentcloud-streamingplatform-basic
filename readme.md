@@ -22,6 +22,7 @@ Deeper description on why it's composed that way and the intentions behind this 
 ## How to use
 
 ### Creating the infra & running the app
+#### Provisioning the cloud infrastructure
 1. Log into Confluent Cloud (https://confluent.cloud/) and generate an API key with scope 
 "Cloud resource management". 
 2. The terraform code needs access to the key and secret. You can provide it by setting the following
@@ -34,11 +35,19 @@ If you've done that correctly, running `echo $TF_VAR_confluent_cloud_api_key` sh
 
 3. `terraform init` in this root folder to initialize terraform
 4. `terraform apply` to create all the resources in confluent cloud. Confirm when terraform asks for confirmation.
+#### Update the topics ACLs with your service account id
 5. After your resources have been created, you need to update your ACL to allow your app-sa Service Account to read and 
-write to the topic you've created. Replace the current values in 
+write to the topics you've created. Replace the current values in 
 [topics.yaml](confluentcloud-streamingplatform-topics/topics.yaml) with the id of your SA. You can display it by 
 running `terraform output app-sa-id`.
-6. In the root folder (confluentcloud-streamingplatform-basic) execute `./run-clientapp.sh`. This reads the outputs of
+6. Run `terraform apply` again to update the topics ACLs with your service account id.
+#### Installing the schemas in local maven repository
+7. To install the schema jar library in your local maven repo that the `clientapp` needs, execute:
+
+`cd ./confluentcloud-streamingplatform-schemas && ./gradlew publishToMavenLocal)`
+
+#### Running the clientapp
+8. In the root folder (confluentcloud-streamingplatform-basic) execute `./run-clientapp.sh`. This reads the outputs of
 the terraform setup and sets the environment variables in the current shell. After that it navigates to the clientapp 
 folder and runs the spring boot application.
 In the output you should see logs informing you that you've successfully published and consumed a message.

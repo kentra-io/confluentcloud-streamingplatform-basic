@@ -4,14 +4,14 @@ favourite_number:
     cleanup.policy: "delete"
     delete.retention.ms: 604800000 # 7 days
   read_permissions:
-    - "sa-yv63rp"
+    - "sa-m0pzox" # needs to be replaced with your app_sa Service account's id
   write_permissions:
-    - "sa-yv63rp"
+    - "sa-m0pzox" # needs to be replaced with your app_sa Service account's id
 person:
   partitions_count: 3
   config:
     cleanup.policy: "compact"
   read_permissions:
-    - "sa-yv63rp"
+    - "sa-m0pzox" # needs to be replaced with your app_sa Service account's id
   write_permissions:
-    - "sa-yv63rp"
+    - "sa-m0pzox" # needs to be replaced with your app_sa Service account's id
