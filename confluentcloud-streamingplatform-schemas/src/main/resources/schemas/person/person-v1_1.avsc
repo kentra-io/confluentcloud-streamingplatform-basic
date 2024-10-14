@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "PersonV1",
+  "namespace": "io.kentra.streaming.avro4k.model.person",
+  "fields": [
+    {
+      "name": "uuid",
+      "type": "string"
+    },
+    {
+      "name": "name",
+      "type": "string"
+    },
+    {
+      "name": "age",
+      "type": ["null", "int"],
+      "default": null
+    }
+  ]
+}

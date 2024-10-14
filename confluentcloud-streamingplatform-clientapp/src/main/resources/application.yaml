@@ -1,0 +1,17 @@
+kafka:
+  topics:
+    favourite-number: favourite_number
+spring:
+  kafka:
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.github.thake.kafka.avro4k.serializer.KafkaAvro4kSerializer
+    consumer:
+      group-id: favourite-number-consumer
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: com.github.thake.kafka.avro4k.serializer.KafkaAvro4kDeserializer
+      auto-offset-reset: earliest
+    properties:
+      record.packages: io.kentra.streaming.testcontainers.port.out
+      auto.register.schemas: false
+      value.subject.name.strategy: io.confluent.kafka.serializers.subject.TopicRecordNameStrategy

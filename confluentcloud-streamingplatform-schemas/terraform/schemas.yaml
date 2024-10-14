@@ -1,0 +1,10 @@
+subjects:
+  - name: "person-io.kentra.streaming.avro4k.model.person.PersonV1"
+    compatibility: "BACKWARD_TRANSITIVE"
+    schema_files:
+      - "person/person-v1_0.avsc"
+#      - "person/person-v1_1.avsc"
+  - name: "favourite_number-io.kentra.streaming.avro4k.model.favourite_number.FavouriteNumberV1"
+    compatibility: "BACKWARD_TRANSITIVE"
+    schema_files:
+      - "favourite-number/favourite-number-v1_0.avsc"

@@ -1,0 +1,15 @@
+{
+  "type" : "record",
+  "name" : "FavouriteNumberV1",
+  "namespace" : "io.kentra.streaming.avro4k.model.favourite_number",
+  "fields" : [ {
+    "name" : "number",
+    "type" : "int"
+  }, {
+    "name" : "author",
+    "type" : "string"
+  }, {
+    "name" : "uuid",
+    "type" : "string"
+  } ]
+}

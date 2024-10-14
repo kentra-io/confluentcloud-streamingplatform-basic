@@ -1,0 +1,10 @@
+spring:
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
+    properties:
+      schema.registry.url: ${SCHEMA_REGISTRY_URL}
+      sasl.mechanism: PLAIN
+      sasl.jaas.config: "org.apache.kafka.common.security.plain.PlainLoginModule required username='${APP_KAFKA_CLUSTER_API_KEY}' password='${APP_KAFKA_CLUSTER_API_SECRET}';"
+      security.protocol: SASL_SSL
+      basic.auth.credentials.source: USER_INFO
+      schema.registry.basic.auth.user.info: "${APP_SCHEMA_REGISTRY_API_KEY}:${APP_SCHEMA_REGISTRY_API_SECRET}"
