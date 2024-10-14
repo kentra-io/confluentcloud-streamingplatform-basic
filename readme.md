@@ -2,7 +2,11 @@
 ## About this repository
 
 This repository is intended as an example of how an internal streaming platform 
-could be build using Confluent Cloud and Terraform. 
+could be build using Confluent Cloud and Terraform.
+
+It could also be very helpful to those learning about Kafka or Confluent Cloud - it sets up a 
+cluster in pay-as-you-go model, with baseline cost of 0$. First computing unit is free, and you probably won't need more
+for development.
 
 It's a POC intended to be as simple as possible while still presenting the [proposed way of working](#proposed-way-of-working) with such platform in a 
 multi-team context.
