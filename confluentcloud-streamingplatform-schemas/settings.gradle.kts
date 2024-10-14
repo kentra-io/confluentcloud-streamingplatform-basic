@@ -1,1 +1,1 @@
-rootProject.name = "kotlin-confluentcloud-avro4k-schemas"
+rootProject.name = "confluentcloud-streamingplatform-schemas"

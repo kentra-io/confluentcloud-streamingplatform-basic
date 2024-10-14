@@ -1,7 +1,6 @@
 package io.kentra.streaming.avro4k.config
 
 import io.kentra.streaming.avro4k.model.favourite_number.FavouriteNumberV1
-import io.kentra.streaming.avro4k.port.out.FavouriteNumber
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
