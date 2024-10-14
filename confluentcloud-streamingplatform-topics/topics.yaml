@@ -7,3 +7,11 @@ favourite_number:
     - "sa-yv63rp"
   write_permissions:
     - "sa-yv63rp"
+person:
+  partitions_count: 3
+  config:
+    cleanup.policy: "compact"
+  read_permissions:
+    - "sa-yv63rp"
+  write_permissions:
+    - "sa-yv63rp"

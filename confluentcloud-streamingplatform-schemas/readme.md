@@ -1,13 +1,17 @@
 # Template Schema repository for Avro4k
+This repository is part of the confluentcloud-streamingplatform-basic project (see [main readme](../readme.md))
 
-## What this repository is
-This is a template repository designed to store avro schemas of a domain. Currently only POC.
+## About this repository
+This is a template repository designed to store avro schemas of a domain. It's a POC and a part of the parent project, 
+but can exist independently if tuned a bit.
+
+It's built using Kotlin and Avro4k, but the presented approach is generic and can be implemented using any tech stack.
 
 ##  Flow
 - Create an Avro4k class and a corresponding .avsc file (coherency validated in Avro4kSerializationTest)
 - Publish it to the local maven repository so that you can use the Avro4k classes in your local kafka client application
-- Add the .avsc to subject mapping in terraform/schema-assignment/schemas.yaml
-- Do `terraform apply` in the terraform/schema-assignment module. This will ensure coherency between 
+- Add the .avsc to subject mapping in terraform/schemas.yaml
+- Do `terraform apply` in the root module (full instruction in [main readme](../readme.md)). This will ensure coherency between 
 the mapping in `schemas.yaml` and your confluent cloud schema registry instance
 
 ## How to use
@@ -16,7 +20,7 @@ the mapping in `schemas.yaml` and your confluent cloud schema registry instance
 - Create a new Avro4k class and a corresponding .avsc file
 - Add the pair to Avro4kSerializationTest to ensure coherency 
 (upgrade idea: establish some convention / validation  that enforces that each Avro4k file is present in this test)
-- 
+
 ### Publishing the schemas to local maven repository
 - `./gradlew publishToMavenLocal` (only local repo supported right now, this is a POC)
 
@@ -33,6 +37,3 @@ the mapping in `schemas.yaml` and your confluent cloud schema registry instance
 - For breaking changes you need to upgrade a major version of the Avro4k class (and add a new .avsc file as well)
 - Do `terraform apply` in the terraform/schema-assignment module.
 Make sure that in main.yaml 
-
-## Planned features
-- CI/CD integration for Terraform

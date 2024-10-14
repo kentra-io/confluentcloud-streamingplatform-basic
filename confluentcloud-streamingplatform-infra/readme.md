@@ -1,13 +1,13 @@
-# Confluentcloud Infra repo - Playground cluster
+# Infra module
+This repository is part of the confluentcloud-streamingplatform-basic project (see [main readme](../readme.md))
 
 ## Overview
-This repository is intended to:
-- create the environment and cluster, to be managed by the platform team
-- have a module where developers can manage topics through a yaml file
+This module is setting up an environment in [Confluent Cloud](http://confluent.cloud):
+- Environment
+- Kafka cluster with schema registry
+- Two service accounts: 
+  - playground_manager_sa
+  - app_sa
+- permissions for these accounts
 
-## When setting up:
-1. Run `terraform apply` on the root module. Cluster, topics and ACLs will be created.
-2. Update the service account id in ./terraform/environment/main.tf and ./terraform/topics/topics.yaml
-3. Run `terraform apply` again in the infra repo
-4. Run `terraform apply` in the schemas repo
-5. Run `./gradlew bootRun --args="--spring.profiles.active=confluent"` in the scratchpad project after `source ~/.zshrc`
+For details check [main.tf](main.tf)
