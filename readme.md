@@ -11,7 +11,7 @@ for development.
 It's a POC intended to be as simple as possible while still presenting the [proposed way of working](#proposed-way-of-working) with such platform in a 
 multi-team context.
 
-It's not a production ready solution - so that the core presented here can be used and 
+It's not a production ready solution - the core presented here can be used and 
 integrated with technologies an organization using that has - CI/CD, secret management tools 
 and whatever you need.
 
@@ -20,53 +20,6 @@ and whatever you need.
 - topics terraform module
 - schema repository
 - kafka kotlin client application that publishes and consumes from a created topic
-
-Deeper description on why it's composed that way and the intentions behind this design in [Proposed way of working](#proposed-way-of-working)
-
-## How to use
-
-### Creating the infra & running the app
-#### Provisioning the cloud infrastructure
-1. Log into Confluent Cloud (https://confluent.cloud/) and generate an API key with scope 
-"Cloud resource management". 
-2. The terraform code needs access to the key and secret. You can provide it by setting the following
-environment variables in the shell where you execute the terraform commands:
-   - TF_VAR_confluent_cloud_api_key 
-   - TF_VAR_confluent_cloud_api_secret
-
-If you're using linux or mac, you can do that by `export TF_VAR_confluent_cloud_api_key="${your_api_key}"`. 
-If you've done that correctly, running `echo $TF_VAR_confluent_cloud_api_key` should output the value of your key
-
-3. `terraform init` in this root folder to initialize terraform
-4. `terraform apply` to create all the resources in confluent cloud. Confirm when terraform asks for confirmation.
-#### Update the topics ACLs with your service account id
-5. After your resources have been created, you need to update your ACL to allow your app-sa Service Account to read and 
-write to the topics you've created. Replace the current values in 
-[topics.yaml](confluentcloud-streamingplatform-topics/topics.yaml) with the id of your SA. You can display it by 
-running `terraform output app-sa-id`.
-6. Run `terraform apply` again to update the topics ACLs with your service account id.
-#### Installing the schemas in local maven repository
-7. To install the schema jar library in your local maven repo that the `clientapp` needs, execute:
-
-`cd ./confluentcloud-streamingplatform-schemas && ./gradlew publishToMavenLocal)`
-
-#### Running the clientapp
-8. In the root folder (confluentcloud-streamingplatform-basic) execute `./run-clientapp.sh`. This reads the outputs of
-the terraform setup and sets the environment variables in the current shell. After that it navigates to the clientapp 
-folder and runs the spring boot application.
-In the output you should see logs informing you that you've successfully published and consumed a message.
-
-Now you have deployed everything to the confluent cloud environment and can run your kafka app. To do that follow 
-the instructions in [./confluentcloud-streamingplatform-clientapp/readme.md](confluentcloud-streamingplatform-clientapp/readme.md)
-
-### Taking the infrastructure down
-If you want to destroy the infrastructure, you need to destroy the modules in the correct order. I wasn't able to 
-explicitly mark the dependencies in the terraform code because of ${REASONS}. To take the whole thing down you need to:
-1. `terraform destroy -target=module.schemas`
-2. `terraform destroy -target=module.topics`
-3. `terraform destroy -target=module.infra`
-
----
 
 ## Proposed way of working
 This is a POC for an organization with a platform team managing the cluster and multiple domain teams running different 
@@ -134,6 +87,51 @@ This repository is intended to be fully owned by the domain team. Changes to sch
 
 As this is a repository defining schemas of a domain, it frequently contains openapi schemas for the REST endpoints,
 but it isn't in scope of this POC.
+
+---
+
+## How to use
+
+### Creating the infra & running the app
+#### Provisioning the cloud infrastructure
+1. Log into Confluent Cloud (https://confluent.cloud/) and generate an API key with scope
+   "Cloud resource management".
+2. The terraform code needs access to the key and secret. You can provide it by setting the following
+   environment variables in the shell where you execute the terraform commands:
+    - TF_VAR_confluent_cloud_api_key
+    - TF_VAR_confluent_cloud_api_secret
+
+If you're using linux or mac, you can do that by `export TF_VAR_confluent_cloud_api_key="${your_api_key}"`.
+If you've done that correctly, running `echo $TF_VAR_confluent_cloud_api_key` should output the value of your key
+
+3. `terraform init` in this root folder to initialize terraform
+4. `terraform apply` to create all the resources in confluent cloud. Confirm when terraform asks for confirmation.
+#### Update the topics ACLs with your service account id
+5. After your resources have been created, you need to update your ACL to allow your app-sa Service Account to read and
+   write to the topics you've created. Replace the current values in
+   [topics.yaml](confluentcloud-streamingplatform-topics/topics.yaml) with the id of your SA. You can display it by
+   running `terraform output app-sa-id`.
+6. Run `terraform apply` again to update the topics ACLs with your service account id.
+#### Installing the schemas in local maven repository
+7. To install the schema jar library in your local maven repo that the `clientapp` needs, execute:
+
+`cd ./confluentcloud-streamingplatform-schemas && ./gradlew publishToMavenLocal)`
+
+#### Running the clientapp
+8. In the root folder (confluentcloud-streamingplatform-basic) execute `./run-clientapp.sh`. This reads the outputs of
+   the terraform setup and sets the environment variables in the current shell. After that it navigates to the clientapp
+   folder and runs the spring boot application.
+   In the output you should see logs informing you that you've successfully published and consumed a message.
+
+Now you have deployed everything to the confluent cloud environment and can run your kafka app. To do that follow
+the instructions in [./confluentcloud-streamingplatform-clientapp/readme.md](confluentcloud-streamingplatform-clientapp/readme.md)
+
+### Taking the infrastructure down
+If you want to destroy the infrastructure, you need to destroy the modules in the correct order. I wasn't able to
+explicitly mark the dependencies in the terraform code because of ${REASONS}. To take the whole thing down you need to:
+1. `terraform destroy -target=module.schemas`
+2. `terraform destroy -target=module.topics`
+3. `terraform destroy -target=module.infra`
 
 ---
 
