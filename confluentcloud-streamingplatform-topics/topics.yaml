@@ -1,0 +1,9 @@
+favourite_number:
+  partitions_count: 6 # default
+  config:
+    cleanup.policy: "delete"
+    delete.retention.ms: 604800000 # 7 days
+  read_permissions:
+    - "sa-yv63rp"
+  write_permissions:
+    - "sa-yv63rp"
