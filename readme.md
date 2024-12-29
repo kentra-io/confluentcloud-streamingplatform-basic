@@ -110,12 +110,12 @@ If you've done that correctly, running `echo $TF_VAR_confluent_cloud_api_key` sh
 5. After your resources have been created, you need to update your ACL to allow your app-sa Service Account to read and
    write to the topics you've created. Replace the current values in
    [topics.yaml](confluentcloud-streamingplatform-topics/topics.yaml) with the id of your SA. You can display it by
-   running `terraform output app-sa-id`.
+   running `terraform output app_sa_id`.
 6. Run `terraform apply` again to update the topics ACLs with your service account id.
 #### Installing the schemas in local maven repository
 7. To install the schema jar library in your local maven repo that the `clientapp` needs, execute:
 
-`cd ./confluentcloud-streamingplatform-schemas && ./gradlew publishToMavenLocal)`
+`(cd ./confluentcloud-streamingplatform-schemas && ./gradlew publishToMavenLocal)`
 
 #### Running the clientapp
 8. In the root folder (confluentcloud-streamingplatform-basic) execute `./run-clientapp.sh`. This reads the outputs of
